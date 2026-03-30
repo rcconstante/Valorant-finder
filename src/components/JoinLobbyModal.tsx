@@ -53,9 +53,9 @@ export default function JoinLobbyModal({ isOpen, onClose, lobby, sessionToken }:
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/90 backdrop-blur-xl"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-lg bg-surface-container border-t-8 border-primary relative">
+      <div className="w-full max-w-lg bg-surface-container border-t-8 border-primary relative max-h-[90vh] overflow-y-auto">
         {/* Decorative Element */}
-        <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary flex items-center justify-center strike-button rotate-12">
+        <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary flex items-center justify-center strike-button rotate-12 hidden sm:flex">
           <span
             className="material-symbols-outlined text-on-primary"
             style={{ fontVariationSettings: "'FILL' 1" }}
@@ -64,7 +64,7 @@ export default function JoinLobbyModal({ isOpen, onClose, lobby, sessionToken }:
           </span>
         </div>
 
-        <div className="p-8">
+        <div className="p-5 sm:p-8">
           <div className="flex justify-between items-start mb-8">
             <div>
               <div className="text-tertiary font-label text-[10px] tracking-[0.2em] uppercase mb-1">
@@ -82,12 +82,12 @@ export default function JoinLobbyModal({ isOpen, onClose, lobby, sessionToken }:
             </button>
           </div>
 
-          <div className="bg-surface-container-lowest p-8 border border-outline-variant mb-6 text-center relative overflow-hidden group">
+            <div className="bg-surface-container-lowest p-4 sm:p-8 border border-outline-variant mb-6 text-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            <div className="text-[10px] font-label text-on-surface-variant uppercase tracking-[0.3em] mb-4">
+            <div className="text-[10px] font-label text-on-surface-variant uppercase tracking-[0.3em] mb-3 sm:mb-4">
               ACCESS_CODE
             </div>
-            <div className="text-5xl md:text-6xl font-headline font-black text-primary tracking-[0.1em] mb-2">
+            <div className="text-3xl sm:text-5xl md:text-6xl font-headline font-black text-primary tracking-[0.05em] sm:tracking-[0.1em] mb-2 break-all">
               {lobby.partyCode}
             </div>
             <div className="flex items-center justify-center gap-2 text-xs font-body uppercase tracking-widest">
@@ -97,7 +97,7 @@ export default function JoinLobbyModal({ isOpen, onClose, lobby, sessionToken }:
           </div>
 
           {/* Lobby details */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
             <div className="bg-surface-container-high p-3 text-center">
               <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Region</div>
               <div className="font-headline font-bold text-sm text-on-surface uppercase">{lobby.region}</div>
@@ -112,17 +112,25 @@ export default function JoinLobbyModal({ isOpen, onClose, lobby, sessionToken }:
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <button
               onClick={handleCopyCode}
-              className="strike-button w-full py-4 bg-surface-container-high text-on-surface font-headline font-bold uppercase tracking-widest hover:bg-surface-variant transition-all flex items-center justify-center gap-2"
+              className="strike-button w-full py-3 sm:py-4 bg-surface-container-high text-on-surface font-headline font-bold text-xs sm:text-base uppercase tracking-widest hover:bg-surface-variant transition-all flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-sm">
                 {copied ? 'check' : 'content_copy'}
               </span>
               {copied ? 'Copied!' : 'Copy Code'}
             </button>
-            <button className="strike-button w-full py-4 bg-primary text-on-primary font-headline font-black uppercase tracking-widest hover:bg-primary-container transition-all flex items-center justify-center gap-2">
+            <button
+              onClick={async () => {
+                await navigator.clipboard.writeText(lobby.partyCode);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+                window.open('https://playvalorant.com', '_blank', 'noopener,noreferrer');
+              }}
+              className="strike-button w-full py-3 sm:py-4 bg-primary text-on-primary font-headline font-black text-xs sm:text-base uppercase tracking-widest hover:bg-primary-container transition-all flex items-center justify-center gap-2"
+            >
               Launch Game
               <span className="material-symbols-outlined text-sm">rocket_launch</span>
             </button>

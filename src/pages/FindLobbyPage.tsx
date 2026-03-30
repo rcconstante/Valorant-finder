@@ -39,7 +39,7 @@ export default function FindLobbyPage() {
 
   return (
     <>
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto">
         {/* Tactical Header Section */}
         <section className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-1">
@@ -53,12 +53,12 @@ export default function FindLobbyPage() {
           </div>
 
           {/* Region Quick Filters */}
-          <div className="flex flex-wrap gap-2 items-center">
+          <div className="flex gap-2 items-center overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible md:pb-0 scrollbar-hide">
             {regionFilters.map((filter) => (
               <button
                 key={filter}
                 onClick={() => setRegionFilter(filter)}
-                className={`px-5 py-2 font-headline font-bold uppercase text-xs tracking-wider transition-colors ${
+                className={`px-3 sm:px-5 py-2 font-headline font-bold uppercase text-[10px] sm:text-xs tracking-wider transition-colors whitespace-nowrap shrink-0 ${
                   regionFilter === filter
                     ? 'bg-surface-container-high border-b-2 border-primary text-on-surface'
                     : 'bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant'
@@ -186,7 +186,7 @@ export default function FindLobbyPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             {lobbies.map((lobby) => (
               <LobbyCard key={lobby._id} lobby={lobby} onJoin={handleJoin} />
             ))}

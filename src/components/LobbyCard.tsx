@@ -54,11 +54,11 @@ export default function LobbyCard({ lobby, onJoin }: LobbyCardProps) {
 
   return (
     <div
-      className={`relative group bg-surface-container-low border-l-4 ${getBorderColor(lobby)} p-6 hover:bg-surface-container transition-all duration-300`}
+      className={`relative group bg-surface-container-low border-l-4 ${getBorderColor(lobby)} p-4 sm:p-6 hover:bg-surface-container transition-all duration-300`}
     >
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
+      <div className="flex justify-between items-start mb-3 sm:mb-4 gap-2">
+        <div className="flex flex-col gap-1 min-w-0 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
             <span
               className={`${getRegionBadge(lobby)} px-2 py-0.5 font-label text-[10px] font-black uppercase tracking-wider`}
             >
@@ -71,19 +71,19 @@ export default function LobbyCard({ lobby, onJoin }: LobbyCardProps) {
             </span>
           </div>
           {lobby.notes ? (
-            <h3 className="text-2xl font-headline font-bold text-on-surface tracking-tight uppercase mt-2">
+            <h3 className="text-lg sm:text-2xl font-headline font-bold text-on-surface tracking-tight uppercase mt-1 sm:mt-2 truncate">
               {lobby.notes}
             </h3>
           ) : (
-            <h3 className="text-2xl font-headline font-bold text-on-surface tracking-tight uppercase mt-2">
+            <h3 className="text-lg sm:text-2xl font-headline font-bold text-on-surface tracking-tight uppercase mt-1 sm:mt-2">
               {lobby.gameMode} Lobby
             </h3>
           )}
         </div>
-        <div className="text-right">
-          <div className={`${getSlotsColor(lobby)} font-headline font-black text-3xl leading-none`}>
+        <div className="text-right shrink-0">
+          <div className={`${getSlotsColor(lobby)} font-headline font-black text-2xl sm:text-3xl leading-none`}>
             {lobby.slotsNeeded}{' '}
-            <span className="text-xs font-medium text-on-surface-variant/50">NEEDED</span>
+            <span className="text-[10px] sm:text-xs font-medium text-on-surface-variant/50">NEEDED</span>
           </div>
           <div className="text-[10px] font-label text-on-surface-variant uppercase tracking-tighter mt-1">
             Slots: {playerCount}/{5}
@@ -91,25 +91,25 @@ export default function LobbyCard({ lobby, onJoin }: LobbyCardProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-6">
-        <div className="bg-surface-container-high p-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <div className="bg-surface-container-high p-2 sm:p-3">
           <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Rank</div>
-          <div className="font-headline font-bold text-sm text-on-surface uppercase">{getRankDisplay(lobby)}</div>
+          <div className="font-headline font-bold text-xs sm:text-sm text-on-surface uppercase">{getRankDisplay(lobby)}</div>
         </div>
-        <div className="bg-surface-container-high p-3">
+        <div className="bg-surface-container-high p-2 sm:p-3">
           <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Comms</div>
-          <div className="flex items-center gap-1 text-on-surface font-headline font-bold text-sm uppercase">
+          <div className="flex items-center gap-1 text-on-surface font-headline font-bold text-xs sm:text-sm uppercase">
             <span className={`material-symbols-outlined text-sm ${comms.color}`}>{comms.icon}</span>
             <span className="truncate">{lobby.commsPreference}</span>
           </div>
         </div>
-        <div className="bg-surface-container-high p-3">
+        <div className="bg-surface-container-high p-2 sm:p-3">
           <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Style</div>
-          <div className="font-headline font-bold text-sm text-on-surface uppercase truncate">{lobby.playstyle}</div>
+          <div className="font-headline font-bold text-xs sm:text-sm text-on-surface uppercase truncate">{lobby.playstyle}</div>
         </div>
-        <div className="bg-surface-container-high p-3">
+        <div className="bg-surface-container-high p-2 sm:p-3">
           <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Timer</div>
-          <CountdownTimer expiresAt={lobby.expiresAt} className="text-sm" />
+          <CountdownTimer expiresAt={lobby.expiresAt} className="text-xs sm:text-sm" />
         </div>
       </div>
 
@@ -118,7 +118,7 @@ export default function LobbyCard({ lobby, onJoin }: LobbyCardProps) {
           {Array.from({ length: playerCount }).map((_, i) => (
             <div
               key={i}
-              className="w-8 h-8 bg-surface-container-highest border border-outline-variant flex items-center justify-center"
+              className="w-7 h-7 sm:w-8 sm:h-8 bg-surface-container-highest border border-outline-variant flex items-center justify-center"
             >
               <span className="material-symbols-outlined text-xs text-on-surface-variant">person</span>
             </div>
@@ -126,7 +126,7 @@ export default function LobbyCard({ lobby, onJoin }: LobbyCardProps) {
         </div>
         <button
           onClick={() => onJoin(lobby)}
-          className={`strike-button px-10 py-3 font-headline font-black uppercase tracking-tighter transition-all active:scale-95 ${getJoinButton(lobby)}`}
+          className={`strike-button px-6 sm:px-10 py-2.5 sm:py-3 font-headline font-black text-sm sm:text-base uppercase tracking-tighter transition-all active:scale-95 ${getJoinButton(lobby)}`}
         >
           Join Lobby
         </button>

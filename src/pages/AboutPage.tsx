@@ -33,14 +33,14 @@ const faqs = [
 
 export default function AboutPage() {
   return (
-    <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto">
+    <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto">
       {/* Header */}
-      <section className="mb-12">
+      <section className="mb-8 md:mb-12">
         <div className="flex items-center gap-2 text-tertiary font-label text-[10px] tracking-[0.2em] uppercase mb-2">
           <span className="w-2 h-2 bg-tertiary" />
           SYS_INFO // ABOUT
         </div>
-        <h2 className="text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
+        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
           About <span className="text-primary-container">VALORANDOMS</span>
         </h2>
         <p className="font-body text-base text-on-surface-variant max-w-xl leading-relaxed">

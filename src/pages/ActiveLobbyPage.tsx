@@ -15,6 +15,7 @@ export default function ActiveLobbyPage() {
   const deleteLobbyMut = useMutation(api.lobbies.deleteLobby);
 
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [extending, setExtending] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -22,7 +23,7 @@ export default function ActiveLobbyPage() {
 
   if (!id) {
     return (
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto text-center">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto text-center">
         <p className="font-headline text-xl text-on-surface-variant uppercase">Invalid lobby ID</p>
       </main>
     );
@@ -30,7 +31,7 @@ export default function ActiveLobbyPage() {
 
   if (lobby === undefined) {
     return (
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto flex flex-col items-center justify-center py-20">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto flex flex-col items-center justify-center py-20">
         <div className="w-8 h-8 border-2 border-primary border-t-transparent animate-spin mb-4" />
         <span className="font-label text-[10px] text-on-surface-variant uppercase tracking-widest">
           Loading lobby...
@@ -41,7 +42,7 @@ export default function ActiveLobbyPage() {
 
   if (lobby === null) {
     return (
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto text-center py-20">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto text-center py-20">
         <span className="material-symbols-outlined text-6xl text-on-surface-variant/30 mb-4">
           error
         </span>
@@ -104,14 +105,14 @@ export default function ActiveLobbyPage() {
   }
 
   return (
-    <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto">
+    <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto">
       {/* Header */}
-      <section className="mb-8">
+      <section className="mb-6 md:mb-8">
         <div className="flex items-center gap-2 text-tertiary font-label text-[10px] tracking-[0.2em] uppercase mb-2">
           <span className="w-2 h-2 bg-tertiary animate-pulse" />
           {isExpired ? 'LOBBY_INACTIVE' : 'LOBBY_ACTIVE // BROADCASTING'}
         </div>
-        <h2 className="text-4xl md:text-6xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
           Your <span className="text-primary-container">Lobby</span>
         </h2>
       </section>
@@ -123,13 +124,13 @@ export default function ActiveLobbyPage() {
       )}
 
       {/* Party Code Hero */}
-      <div className={`bg-surface-container-low border-l-4 ${isExpired ? 'border-error' : 'border-primary-container'} p-8 md:p-12 mb-6 text-center relative overflow-hidden group`}>
+      <div className={`bg-surface-container-low border-l-4 ${isExpired ? 'border-error' : 'border-primary-container'} p-5 sm:p-8 md:p-12 mb-6 text-center relative overflow-hidden group`}>
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
         <div className="text-[10px] font-label text-on-surface-variant uppercase tracking-[0.3em] mb-4">
           PARTY_ACCESS_CODE
         </div>
-        <div className="text-5xl md:text-7xl font-headline font-black text-primary tracking-[0.1em] mb-4 relative">
+        <div className="text-3xl sm:text-5xl md:text-7xl font-headline font-black text-primary tracking-[0.05em] sm:tracking-[0.1em] mb-4 relative break-all">
           {lobby.partyCode}
         </div>
 
@@ -148,19 +149,34 @@ export default function ActiveLobbyPage() {
           </div>
         )}
 
-        <button
-          onClick={handleCopy}
-          className="inline-flex items-center gap-2 px-8 py-3 bg-surface-container-high text-on-surface font-headline font-bold uppercase tracking-tighter hover:bg-surface-variant transition-all active:scale-95"
-        >
-          <span className="material-symbols-outlined text-sm">
-            {copied ? 'check' : 'content_copy'}
-          </span>
-          {copied ? 'Copied!' : 'Copy Code'}
-        </button>
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <button
+            onClick={handleCopy}
+            className="inline-flex items-center gap-2 px-8 py-3 bg-surface-container-high text-on-surface font-headline font-bold uppercase tracking-tighter hover:bg-surface-variant transition-all active:scale-95"
+          >
+            <span className="material-symbols-outlined text-sm">
+              {copied ? 'check' : 'content_copy'}
+            </span>
+            {copied ? 'Copied!' : 'Copy Code'}
+          </button>
+          <button
+            onClick={async () => {
+              await navigator.clipboard.writeText(window.location.href);
+              setLinkCopied(true);
+              setTimeout(() => setLinkCopied(false), 2000);
+            }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-surface-container-high text-on-surface-variant font-headline font-bold uppercase tracking-tighter hover:bg-surface-variant transition-all active:scale-95 text-sm"
+          >
+            <span className="material-symbols-outlined text-sm">
+              {linkCopied ? 'check' : 'link'}
+            </span>
+            {linkCopied ? 'Link Copied!' : 'Share Link'}
+          </button>
+        </div>
       </div>
 
       {/* Lobby Details Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-6">
         <div className="bg-surface-container-low p-4">
           <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Region</div>
           <div className="font-headline font-bold text-lg text-on-surface uppercase">{lobby.region}</div>

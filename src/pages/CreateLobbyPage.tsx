@@ -62,14 +62,14 @@ export default function CreateLobbyPage() {
   };
 
   return (
-    <main className="pt-24 pb-32 px-4 md:px-8 max-w-3xl mx-auto">
+    <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-3xl mx-auto">
       {/* Header */}
-      <section className="mb-10">
+      <section className="mb-8 md:mb-10">
         <div className="flex items-center gap-2 text-tertiary font-label text-[10px] tracking-[0.2em] uppercase mb-2">
           <span className="w-2 h-2 bg-tertiary" />
           SYS_INIT_SEQUENCE // LOBBY_CREATE
         </div>
-        <h2 className="text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
+        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
           Create <span className="text-primary-container">Lobby</span>
         </h2>
         <p className="font-body text-sm text-on-surface-variant mt-3 max-w-lg">
