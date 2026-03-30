@@ -39,10 +39,10 @@ export default function FindLobbyPage() {
 
   return (
     <>
-      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto w-full overflow-hidden">
         {/* Tactical Header Section */}
-        <section className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-1">
+        <section className="mb-6 md:mb-10">
+          <div className="space-y-1 mb-4 md:mb-0">
             <div className="flex items-center gap-2 text-tertiary font-label text-[10px] tracking-[0.2em] uppercase mb-2">
               <span className="w-2 h-2 bg-tertiary" />
               SYS_FEED_ACTIVE // LIVE_LOBBIES
@@ -53,7 +53,7 @@ export default function FindLobbyPage() {
           </div>
 
           {/* Region Quick Filters */}
-          <div className="flex gap-2 items-center overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible md:pb-0 scrollbar-hide">
+          <div className="flex gap-2 items-center overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-visible md:pb-0 scrollbar-hide mt-4">
             {regionFilters.map((filter) => (
               <button
                 key={filter}
@@ -69,7 +69,7 @@ export default function FindLobbyPage() {
             ))}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="px-4 py-2 bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant font-headline font-bold uppercase text-xs tracking-wider transition-colors flex items-center gap-1"
+              className="px-4 py-2 bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant font-headline font-bold uppercase text-xs tracking-wider transition-colors flex items-center gap-1 shrink-0"
             >
               <span className="material-symbols-outlined text-sm">tune</span>
               Filters
@@ -79,8 +79,8 @@ export default function FindLobbyPage() {
 
         {/* Extended Filters */}
         {showFilters && (
-          <section className="mb-8 bg-surface-container-low p-6 border-l-4 border-tertiary">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <section className="mb-6 md:mb-8 bg-surface-container-low p-4 sm:p-6 border-l-4 border-tertiary">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               <div>
                 <div className="text-[9px] font-label text-on-surface-variant uppercase tracking-widest mb-2">
                   Game Mode
@@ -186,7 +186,7 @@ export default function FindLobbyPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {lobbies.map((lobby) => (
               <LobbyCard key={lobby._id} lobby={lobby} onJoin={handleJoin} />
             ))}
