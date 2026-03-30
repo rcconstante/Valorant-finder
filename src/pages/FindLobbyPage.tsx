@@ -39,7 +39,7 @@ export default function FindLobbyPage() {
 
   return (
     <>
-      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto w-full overflow-hidden">
+      <main className="pt-18 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 max-w-7xl mx-auto w-full overflow-x-hidden">
         {/* Tactical Header Section */}
         <section className="mb-6 md:mb-10">
           <div className="space-y-1 mb-4 md:mb-0">

@@ -58,6 +58,7 @@ export const create = mutation({
     playstyle: v.string(),
     language: v.optional(v.string()),
     notes: v.optional(v.string()),
+    fingerprint: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const session = await requireSession(ctx, args.sessionToken);
@@ -110,13 +111,35 @@ export const create = mutation({
       throw new Error('Party code contains inappropriate language');
     }
 
-    // --- Rate limit: max 2 active lobbies per session ---
+    // --- Rate limit: max 1 active lobby per session ---
     const activeLobbies = await ctx.db
       .query('lobbies')
       .withIndex('by_session', (q) => q.eq('sessionId', session._id).eq('status', 'active'))
       .collect();
-    if (activeLobbies.length >= 2) {
-      throw new Error('Maximum 2 active lobbies per session');
+    // Also filter out already-expired ones not yet cleaned by cron
+    const trulyActive = activeLobbies.filter((l) => l.expiresAt > Date.now());
+    if (trulyActive.length >= 1) {
+      throw new Error('You already have an active lobby. Delete or wait for it to expire before creating another.');
+    }
+
+    // --- Rate limit: fingerprint-based (1 active lobby per device/IP) ---
+    const fingerprint = args.fingerprint?.slice(0, 64) || session.fingerprint;
+    if (fingerprint) {
+      // Check all sessions with this fingerprint
+      const fpSessions = await ctx.db
+        .query('anonymous_sessions')
+        .withIndex('by_fingerprint', (q) => q.eq('fingerprint', fingerprint))
+        .collect();
+      for (const fpSession of fpSessions) {
+        const fpLobbies = await ctx.db
+          .query('lobbies')
+          .withIndex('by_session', (q) => q.eq('sessionId', fpSession._id).eq('status', 'active'))
+          .collect();
+        const fpActive = fpLobbies.filter((l) => l.expiresAt > Date.now());
+        if (fpActive.length > 0) {
+          throw new Error('An active lobby already exists from this device. Only one lobby per device at a time.');
+        }
+      }
     }
 
     // --- Rate limit: no more than 1 lobby creation per minute ---
@@ -135,6 +158,7 @@ export const create = mutation({
     const now = Date.now();
     const lobbyId = await ctx.db.insert('lobbies', {
       sessionId: session._id,
+      fingerprint: fingerprint || undefined,
       partyCode,
       region: args.region,
       gameMode: args.gameMode,
@@ -155,6 +179,92 @@ export const create = mutation({
     });
 
     return lobbyId;
+  },
+});
+
+export const editLobby = mutation({
+  args: {
+    lobbyId: v.id('lobbies'),
+    sessionToken: v.string(),
+    partyCode: v.optional(v.string()),
+    region: v.optional(v.string()),
+    gameMode: v.optional(v.string()),
+    rankMin: v.optional(v.string()),
+    rankMax: v.optional(v.string()),
+    rankAny: v.optional(v.boolean()),
+    slotsNeeded: v.optional(v.number()),
+    commsPreference: v.optional(v.string()),
+    playstyle: v.optional(v.string()),
+    language: v.optional(v.string()),
+    notes: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const session = await requireSession(ctx, args.sessionToken);
+
+    const lobby = await ctx.db.get(args.lobbyId);
+    if (!lobby) throw new Error('Lobby not found');
+    if (lobby.sessionId !== session._id) throw new Error('Not the lobby creator');
+    if (lobby.status !== 'active') throw new Error('Lobby is not active');
+    if (lobby.expiresAt <= Date.now()) throw new Error('Lobby has expired');
+
+    const patch: Record<string, unknown> = { updatedAt: Date.now() };
+
+    if (args.partyCode !== undefined) {
+      const partyCode = sanitize(args.partyCode);
+      if (!partyCode || partyCode.length < 2 || partyCode.length > 30) {
+        throw new Error('Party code must be 2-30 characters');
+      }
+      if (containsProfanity(partyCode)) throw new Error('Party code contains inappropriate language');
+      patch.partyCode = partyCode;
+    }
+    if (args.region !== undefined) {
+      if (!VALID_REGIONS.includes(args.region)) throw new Error('Invalid region');
+      patch.region = args.region;
+    }
+    if (args.gameMode !== undefined) {
+      if (!VALID_GAME_MODES.includes(args.gameMode)) throw new Error('Invalid game mode');
+      patch.gameMode = args.gameMode;
+    }
+    if (args.slotsNeeded !== undefined) {
+      if (!Number.isInteger(args.slotsNeeded) || args.slotsNeeded < 1 || args.slotsNeeded > 4) {
+        throw new Error('Slots needed must be 1-4');
+      }
+      patch.slotsNeeded = args.slotsNeeded;
+    }
+    if (args.commsPreference !== undefined) {
+      if (!VALID_COMMS.includes(args.commsPreference)) throw new Error('Invalid comms preference');
+      patch.commsPreference = args.commsPreference;
+    }
+    if (args.playstyle !== undefined) {
+      if (!VALID_PLAYSTYLES.includes(args.playstyle)) throw new Error('Invalid playstyle');
+      patch.playstyle = args.playstyle;
+    }
+    if (args.language !== undefined) {
+      if (!VALID_LANGUAGES.includes(args.language)) throw new Error('Invalid language');
+      patch.language = args.language;
+    }
+    if (args.rankAny !== undefined) {
+      patch.rankAny = args.rankAny;
+      if (args.rankAny) {
+        patch.rankMin = undefined;
+        patch.rankMax = undefined;
+      }
+    }
+    if (args.rankMin !== undefined && !args.rankAny) {
+      if (!VALID_RANKS.includes(args.rankMin)) throw new Error('Invalid min rank');
+      patch.rankMin = args.rankMin;
+    }
+    if (args.rankMax !== undefined && !args.rankAny) {
+      if (!VALID_RANKS.includes(args.rankMax)) throw new Error('Invalid max rank');
+      patch.rankMax = args.rankMax;
+    }
+    if (args.notes !== undefined) {
+      const notes = sanitize(args.notes).slice(0, 120);
+      if (notes && containsProfanity(notes)) throw new Error('Notes contain inappropriate language');
+      patch.notes = notes || undefined;
+    }
+
+    await ctx.db.patch(args.lobbyId, patch);
   },
 });
 
@@ -327,10 +437,16 @@ export const expireStale = mutation({
 
     for (const lobby of stale) {
       if (lobby.expiresAt <= now) {
-        await ctx.db.patch(lobby._id, {
-          status: 'expired',
-          updatedAt: now,
-        });
+        // Delete reports
+        const reports = await ctx.db
+          .query('lobby_reports')
+          .withIndex('by_lobby', (q) => q.eq('lobbyId', lobby._id))
+          .collect();
+        for (const report of reports) {
+          await ctx.db.delete(report._id);
+        }
+        // Delete the lobby entirely
+        await ctx.db.delete(lobby._id);
       }
     }
   },

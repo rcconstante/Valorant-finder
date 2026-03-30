@@ -5,7 +5,7 @@ const SESSION_TOKEN_MAX_LENGTH = 100;
 const SESSION_TOKEN_PATTERN = /^anon_[0-9a-f]{32}$/;
 
 export const initSession = mutation({
-  args: { sessionToken: v.string() },
+  args: { sessionToken: v.string(), fingerprint: v.optional(v.string()) },
   handler: async (ctx, args) => {
     // --- Security: Validate token format ---
     if (
@@ -16,6 +16,9 @@ export const initSession = mutation({
       throw new Error('Invalid session token format');
     }
 
+    // Sanitize fingerprint
+    const fingerprint = args.fingerprint?.slice(0, 64) || undefined;
+
     const existing = await ctx.db
       .query('anonymous_sessions')
       .withIndex('by_token', (q) => q.eq('sessionToken', args.sessionToken))
@@ -23,7 +26,11 @@ export const initSession = mutation({
 
     if (existing) {
       if (existing.isBlocked) throw new Error('Session is blocked');
-      await ctx.db.patch(existing._id, { lastSeenAt: Date.now() });
+      const patch: Record<string, unknown> = { lastSeenAt: Date.now() };
+      if (fingerprint && !existing.fingerprint) {
+        patch.fingerprint = fingerprint;
+      }
+      await ctx.db.patch(existing._id, patch);
       return existing._id;
     }
 
@@ -32,6 +39,7 @@ export const initSession = mutation({
       createdAt: Date.now(),
       lastSeenAt: Date.now(),
       isBlocked: false,
+      fingerprint,
     });
     return id;
   },

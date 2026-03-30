@@ -7,10 +7,13 @@ export default defineSchema({
     createdAt: v.number(),
     lastSeenAt: v.number(),
     isBlocked: v.boolean(),
-  }).index('by_token', ['sessionToken']),
+    fingerprint: v.optional(v.string()),
+  }).index('by_token', ['sessionToken'])
+    .index('by_fingerprint', ['fingerprint']),
 
   lobbies: defineTable({
     sessionId: v.id('anonymous_sessions'),
+    fingerprint: v.optional(v.string()),
     partyCode: v.string(),
     region: v.string(),
     gameMode: v.string(),

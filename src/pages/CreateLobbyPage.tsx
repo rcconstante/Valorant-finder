@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
-import { useMutation } from 'convex/react';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery } from 'convex/react';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../../convex/_generated/api';
 import { useSession } from '../lib/useSession';
 import AdInterstitial from '../components/AdInterstitial';
@@ -16,8 +16,10 @@ import {
 
 export default function CreateLobbyPage() {
   const navigate = useNavigate();
-  const { sessionToken } = useSession();
+  const { sessionToken, fingerprint } = useSession();
   const createLobby = useMutation(api.lobbies.create);
+  const myLobbies = useQuery(api.lobbies.getMyLobbies, sessionToken ? { sessionToken } : 'skip');
+  const activeLobby = myLobbies?.find((l) => l.status === 'active' && l.expiresAt > Date.now());
   const formLoadTime = useRef(Date.now());
 
   const [partyCode, setPartyCode] = useState('');
@@ -68,6 +70,7 @@ export default function CreateLobbyPage() {
     try {
       const lobbyId = await createLobby({
         sessionToken,
+        fingerprint,
         partyCode: partyCode.trim(),
         region,
         gameMode,
@@ -104,6 +107,24 @@ export default function CreateLobbyPage() {
           Set up your lobby in seconds. Your party code will be shown to players who join.
         </p>
       </section>
+
+      {/* Active lobby warning */}
+      {activeLobby && (
+        <div className="mb-6 p-5 bg-error-container/20 border-l-4 border-error">
+          <h3 className="font-headline font-bold text-sm text-error uppercase tracking-tighter mb-2">
+            You already have an active lobby
+          </h3>
+          <p className="font-body text-sm text-on-surface-variant mb-4">
+            Only one active lobby at a time. Delete your current lobby or wait for it to expire.
+          </p>
+          <Link
+            to={`/lobby/${activeLobby._id}`}
+            className="inline-block px-6 py-2 bg-primary-container text-on-primary-container font-headline font-bold uppercase text-xs tracking-tighter hover:bg-primary transition-colors"
+          >
+            Go to My Lobby
+          </Link>
+        </div>
+      )}
 
       {error && (
         <div className="mb-6 p-4 bg-error-container/20 border-l-4 border-error text-error font-label text-sm uppercase">
@@ -376,7 +397,7 @@ export default function CreateLobbyPage() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={isSubmitting || !sessionToken || !partyCode.trim()}
+          disabled={isSubmitting || !sessionToken || !partyCode.trim() || !!activeLobby}
           className="strike-button w-full py-5 bg-primary-container text-on-primary-container font-headline font-black text-xl uppercase tracking-tighter hover:bg-primary transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'DEPLOYING...' : 'DEPLOY LOBBY'}
