@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 type ContactCategory = 'bug' | 'report' | 'feedback' | 'question' | 'other';
@@ -15,11 +15,15 @@ export default function SupportPage() {
   const [category, setCategory] = useState<ContactCategory | ''>('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const formLoadTime = useRef(Date.now());
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!category || !message.trim()) return;
-    // For now, just show confirmation. In production, this would send to a backend endpoint.
+    // Bot detection
+    if (honeypot) return;
+    if (Date.now() - formLoadTime.current < 3000) return;
     setSubmitted(true);
   };
 
@@ -59,7 +63,7 @@ export default function SupportPage() {
               About & FAQ
             </h4>
             <p className="font-body text-xs text-on-surface-variant">
-              Learn how VALORANDOMS works and find answers.
+              Learn how QuickLobby works and find answers.
             </p>
           </Link>
           <Link
@@ -154,6 +158,12 @@ export default function SupportPage() {
               </p>
             </div>
 
+            {/* Honeypot */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }}>
+              <label htmlFor="support_url">Website</label>
+              <input type="text" id="support_url" name="support_url" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+            </div>
+
             <button
               type="submit"
               disabled={!category || !message.trim()}
@@ -171,7 +181,7 @@ export default function SupportPage() {
           Reporting In-Game Issues
         </h3>
         <p className="font-body text-sm text-on-surface-variant leading-relaxed">
-          VALORANDOMS is not affiliated with Riot Games. For in-game issues, cheating reports, or account
+          QuickLobby is not affiliated with Riot Games. For in-game issues, cheating reports, or account
           problems, please contact{' '}
           <a
             href="https://support-valorant.riotgames.com"
@@ -181,7 +191,7 @@ export default function SupportPage() {
           >
             Riot Games Support
           </a>{' '}
-          directly. We can only assist with issues related to the VALORANDOMS lobby finder service.
+          directly. We can only assist with issues related to the QuickLobby lobby finder service.
         </p>
       </section>
     </main>

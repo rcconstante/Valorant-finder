@@ -1,6 +1,6 @@
 {
-  "name": "VALORANDOMS",
-  "short_name": "VALORANDOMS",
+  "name": "QuickLobby",
+  "short_name": "QuickLobby",
   "description": "Find Valorant teammates instantly. No account needed.",
   "start_url": "/",
   "display": "standalone",

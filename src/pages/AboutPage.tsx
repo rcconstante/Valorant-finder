@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 
 const faqs = [
   {
-    q: 'Do I need a Riot account to use VALORANDOMS?',
-    a: 'No. VALORANDOMS is completely anonymous. You don\'t need to sign in, create an account, or link your Riot ID. Just create or find a lobby instantly.',
+    q: 'Do I need a Riot account to use QuickLobby?',
+    a: 'No. QuickLobby is completely anonymous. You don\'t need to sign in, create an account, or link your Riot ID. Just create or find a lobby instantly.',
   },
   {
     q: 'How does lobby expiry work?',
@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: 'Is this affiliated with Riot Games?',
-    a: 'No. VALORANDOMS is a community tool and is not endorsed by or affiliated with Riot Games. We do not access any Riot APIs or game data.',
+    a: 'No. QuickLobby is a community tool and is not endorsed by or affiliated with Riot Games. We do not access any Riot APIs or game data.',
   },
   {
     q: 'How do I join a lobby?',
@@ -41,7 +41,7 @@ export default function AboutPage() {
           SYS_INFO // ABOUT
         </div>
         <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
-          About <span className="text-primary-container">VALORANDOMS</span>
+          About <span className="text-primary-container">QUICKLOBBY</span>
         </h2>
         <p className="font-body text-base text-on-surface-variant max-w-xl leading-relaxed">
           A fast, anonymous, no-account Valorant lobby finder. Create a lobby in seconds, share your party code,

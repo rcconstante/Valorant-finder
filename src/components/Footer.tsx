@@ -15,7 +15,7 @@ export default function Footer() {
         </Link>
       </div>
       <p className="font-body text-[10px] md:text-xs tracking-widest text-[#60dcb0] text-center">
-        © 2026 VALORANDOMS. TACTICAL PRECISION ASSURED.
+        © 2026 QUICKLOBBY. TACTICAL PRECISION ASSURED.
       </p>
       <p className="font-body text-[9px] tracking-widest text-on-surface-variant/40 uppercase text-center">
         Not affiliated with Riot Games

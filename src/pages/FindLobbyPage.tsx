@@ -47,7 +47,7 @@ export default function FindLobbyPage() {
               <span className="w-2 h-2 bg-tertiary" />
               SYS_FEED_ACTIVE // LIVE_LOBBIES
             </div>
-            <h2 className="text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
               Find <span className="text-primary-container">Lobby</span>
             </h2>
           </div>

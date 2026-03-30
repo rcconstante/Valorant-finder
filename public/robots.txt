@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /lobby/
 
-Sitemap: https://valorandoms.com/sitemap.xml
+Sitemap: https://quicklobby.app/sitemap.xml

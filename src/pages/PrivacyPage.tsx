@@ -22,7 +22,7 @@ export default function PrivacyPage() {
             Our Commitment
           </h3>
           <p className="font-body text-sm text-on-surface-variant leading-relaxed">
-            VALORANDOMS is built on the principle of anonymity. We collect the absolute minimum data
+            QuickLobby is built on the principle of anonymity. We collect the absolute minimum data
             necessary to operate the Service. No accounts, no emails, no personal information required.
           </p>
         </section>

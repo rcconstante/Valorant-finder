@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 
-const SESSION_KEY = 'valorandoms_session_token';
+const SESSION_KEY = 'quicklobby_session_token';
 
 function generateToken(): string {
   const array = new Uint8Array(16);

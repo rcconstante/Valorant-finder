@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useMutation } from 'convex/react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../convex/_generated/api';
 import { useSession } from '../lib/useSession';
+import AdInterstitial from '../components/AdInterstitial';
 import {
   REGIONS,
   GAME_MODES,
@@ -17,6 +18,7 @@ export default function CreateLobbyPage() {
   const navigate = useNavigate();
   const { sessionToken } = useSession();
   const createLobby = useMutation(api.lobbies.create);
+  const formLoadTime = useRef(Date.now());
 
   const [partyCode, setPartyCode] = useState('');
   const [region, setRegion] = useState('APAC');
@@ -31,10 +33,35 @@ export default function CreateLobbyPage() {
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAd, setShowAd] = useState(false);
+  const [createdLobbyId, setCreatedLobbyId] = useState<string | null>(null);
+  // Honeypot field — bots will fill this, humans won't see it
+  const [honeypot, setHoneypot] = useState('');
+
+  const handleAdClose = useCallback(() => {
+    setShowAd(false);
+    if (createdLobbyId) {
+      navigate(`/lobby/${createdLobbyId}`);
+    }
+  }, [createdLobbyId, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!sessionToken) return;
+
+    // Bot detection: honeypot filled
+    if (honeypot) {
+      setError('Submission blocked. Please try again.');
+      return;
+    }
+
+    // Bot detection: form submitted too fast (under 3 seconds)
+    const elapsed = Date.now() - formLoadTime.current;
+    if (elapsed < 3000) {
+      setError('Please take a moment to fill out the form properly.');
+      return;
+    }
+
     setError('');
     setIsSubmitting(true);
 
@@ -53,7 +80,8 @@ export default function CreateLobbyPage() {
         language,
         notes: notes.trim() || undefined,
       });
-      navigate(`/lobby/${lobbyId}`);
+      setCreatedLobbyId(lobbyId as string);
+      setShowAd(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create lobby');
     } finally {
@@ -101,6 +129,20 @@ export default function CreateLobbyPage() {
           <p className="mt-2 text-[9px] font-label text-on-surface-variant/60 uppercase tracking-widest">
             This code will be visible when players join your lobby
           </p>
+        </div>
+
+        {/* Honeypot — invisible to humans, bots auto-fill it */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }}>
+          <label htmlFor="website_url">Website</label>
+          <input
+            type="text"
+            id="website_url"
+            name="website_url"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
         </div>
 
         {/* Region & Mode */}
@@ -340,6 +382,8 @@ export default function CreateLobbyPage() {
           {isSubmitting ? 'DEPLOYING...' : 'DEPLOY LOBBY'}
         </button>
       </form>
+
+      {showAd && <AdInterstitial onClose={handleAdClose} />}
     </main>
   );
 }

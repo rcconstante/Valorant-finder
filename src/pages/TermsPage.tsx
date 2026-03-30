@@ -22,7 +22,7 @@ export default function TermsPage() {
             1. Acceptance of Terms
           </h3>
           <p className="font-body text-sm text-on-surface-variant leading-relaxed">
-            By accessing or using VALORANDOMS ("the Service"), you agree to be bound by these Terms of Engagement.
+            By accessing or using QuickLobby ("the Service"), you agree to be bound by these Terms of Engagement.
             If you do not agree to these terms, do not use the Service. The Service is a community-built lobby finder
             tool and is not affiliated with, endorsed by, or connected to Riot Games in any way.
           </p>
@@ -33,7 +33,7 @@ export default function TermsPage() {
             2. Description of Service
           </h3>
           <p className="font-body text-sm text-on-surface-variant leading-relaxed">
-            VALORANDOMS provides an anonymous, no-account lobby finder for Valorant players. Users can create
+            QuickLobby provides an anonymous, no-account lobby finder for Valorant players. Users can create
             temporary lobbies with party codes, browse active lobbies, and copy party codes to join games.
             All lobbies automatically expire after 5 minutes and can be extended up to 3 times by the creator.
           </p>
@@ -101,9 +101,9 @@ export default function TermsPage() {
             6. Intellectual Property
           </h3>
           <p className="font-body text-sm text-on-surface-variant leading-relaxed">
-            VALORANT is a registered trademark of Riot Games, Inc. VALORANDOMS is not affiliated with, endorsed by,
+            VALORANT is a registered trademark of Riot Games, Inc. QuickLobby is not affiliated with, endorsed by,
             or connected to Riot Games. All Riot Games trademarks and content belong to their respective owners.
-            The VALORANDOMS website, design, and code are the property of the VALORANDOMS team.
+            The QuickLobby website, design, and code are the property of the QuickLobby team.
           </p>
         </section>
 
