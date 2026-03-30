@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.cut-corner {
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
+}
+
+.cut-corner-reverse {
+  clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px);
+}
+
+.slash-bg {
+  background: linear-gradient(135deg, transparent 49.5%, #212b35 49.5%, #212b35 50.5%, transparent 50.5%);
+  background-size: 20px 20px;
+}
+
+.strike-button {
+  clip-path: polygon(0 0, 85% 0, 100% 25%, 100% 100%, 0 100%);
+}

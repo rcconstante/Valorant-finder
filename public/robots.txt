@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /lobby/
+
+Sitemap: https://valorandoms.com/sitemap.xml

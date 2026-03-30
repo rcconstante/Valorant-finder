@@ -1,0 +1,16 @@
+{
+  "name": "VALORANDOMS",
+  "short_name": "VALORANDOMS",
+  "description": "Find Valorant teammates instantly. No account needed.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a141e",
+  "theme_color": "#0a141e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
