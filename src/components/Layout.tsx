@@ -4,6 +4,7 @@ import Footer from './Footer';
 import BottomNav from './BottomNav';
 import AdBanner from './AdBanner';
 import CookieConsent from './CookieConsent';
+import WelcomeModal from './WelcomeModal';
 
 export default function Layout() {
   return (
@@ -19,6 +20,7 @@ export default function Layout() {
       <Footer />
       <BottomNav />
       <CookieConsent />
+      <WelcomeModal />
     </div>
   );
 }

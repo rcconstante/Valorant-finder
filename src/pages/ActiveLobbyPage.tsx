@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import type { Id } from '../../convex/_generated/dataModel';
 import CountdownTimer from '../components/CountdownTimer';
+import AdInterstitial from '../components/AdInterstitial';
 import { useSession } from '../lib/useSession';
 import {
   REGIONS,
@@ -32,7 +33,7 @@ export default function ActiveLobbyPage() {
   const [deleting, setDeleting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-
+  const [showExtendAd, setShowExtendAd] = useState(false);
   // Edit form state
   const [editPartyCode, setEditPartyCode] = useState('');
   const [editRegion, setEditRegion] = useState('');
@@ -143,6 +144,12 @@ export default function ActiveLobbyPage() {
 
   const handleExtend = async () => {
     if (!sessionToken || extending) return;
+    setShowExtendAd(true);
+  };
+
+  const performExtend = useCallback(async () => {
+    if (!sessionToken || !lobby) return;
+    setShowExtendAd(false);
     setError('');
     setExtending(true);
     try {
@@ -152,7 +159,7 @@ export default function ActiveLobbyPage() {
     } finally {
       setExtending(false);
     }
-  };
+  }, [sessionToken, lobby, extendLobby]);
 
   const handleDelete = async () => {
     if (!sessionToken || deleting) return;
@@ -575,6 +582,9 @@ export default function ActiveLobbyPage() {
           </div>
         </div>
       )}
+
+      {/* Extend Ad Interstitial */}
+      {showExtendAd && <AdInterstitial onClose={performExtend} />}
     </main>
   );
 }
