@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
@@ -142,12 +142,12 @@ export default function ActiveLobbyPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleExtend = async () => {
+  const handleExtend = () => {
     if (!sessionToken || extending) return;
     setShowExtendAd(true);
   };
 
-  const performExtend = useCallback(async () => {
+  const performExtend = async () => {
     if (!sessionToken || !lobby) return;
     setShowExtendAd(false);
     setError('');
@@ -159,7 +159,7 @@ export default function ActiveLobbyPage() {
     } finally {
       setExtending(false);
     }
-  }, [sessionToken, lobby, extendLobby]);
+  };
 
   const handleDelete = async () => {
     if (!sessionToken || deleting) return;
