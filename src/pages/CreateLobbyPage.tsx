@@ -100,9 +100,9 @@ export default function CreateLobbyPage() {
           <span className="w-2 h-2 bg-tertiary" />
           SYS_INIT_SEQUENCE // LOBBY_CREATE
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
           Create <span className="text-primary-container">Lobby</span>
-        </h2>
+        </h1>
         <p className="font-body text-sm text-on-surface-variant mt-3 max-w-lg">
           Set up your lobby in seconds. Your party code will be shown to players who join.
         </p>

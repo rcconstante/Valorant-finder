@@ -8,9 +8,9 @@ export default function PrivacyPage() {
           <span className="w-2 h-2 bg-tertiary" />
           SYS_LEGAL // PRIVACY
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
           Privacy <span className="text-primary-container">Protocol</span>
-        </h2>
+        </h1>
         <p className="font-body text-sm text-on-surface-variant">
           Last updated: March 30, 2026
         </p>

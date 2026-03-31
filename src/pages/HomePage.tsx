@@ -26,11 +26,11 @@ export default function HomePage() {
             <span className="font-label text-[10px] md:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-1 md:mb-2">
               SYS_INIT_SEQUENCE
             </span>
-            <h2 className="font-headline text-3xl md:text-5xl font-black text-white uppercase leading-none mb-2 md:mb-4">
-              CREATE
+            <h1 className="font-headline text-3xl md:text-5xl font-black text-white uppercase leading-none mb-2 md:mb-4">
+              Find Valorant
               <br />
-              <span className="text-primary-container">LOBBY</span>
-            </h2>
+              <span className="text-primary-container">Teammates</span>
+            </h1>
             <p className="font-body text-xs md:text-sm text-on-surface-variant max-w-xs mb-4 md:mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block">
               Assemble your tactical unit. Define parameters and secure the AO.
             </p>

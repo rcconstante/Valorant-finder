@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Primary Meta Tags -->
-    <title>QuickLobby — Find Valorant Teammates Instantly | No Account Needed</title>
-    <meta name="title" content="QuickLobby — Find Valorant Teammates Instantly | No Account Needed" />
-    <meta name="description" content="The fastest way to find Valorant teammates. Create or join a lobby in seconds — no account, no Discord, no hassle. Anonymous, real-time, auto-expiring lobbies for every region and rank." />
+    <title>QuickLobby — Find Valorant Teammates Instantly</title>
+    <meta name="title" content="QuickLobby — Find Valorant Teammates Instantly" />
+    <meta name="description" content="Find Valorant teammates in seconds. Create or join anonymous lobbies — no account, no Discord. Real-time, auto-expiring, all regions and ranks." />
     <meta name="keywords" content="Valorant, LFG, looking for group, find teammates, Valorant lobby finder, party code, Valorant team finder, anonymous, no login, Valorant LFG, competitive, unrated, ranked" />
     <meta name="author" content="QuickLobby" />
     <meta name="robots" content="index, follow" />
@@ -68,16 +68,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://dusty-ostrich-744.convex.cloud" />
     <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKQEHMZW2B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RKQEHMZW2B');
+    </script>
+
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9875484924472518" crossorigin="anonymous"></script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to use QuickLobby.</noscript>
+    <noscript>
+      <h1>QuickLobby — Find Valorant Teammates Instantly</h1>
+      <p>The fastest anonymous Valorant lobby finder. Create or join a lobby in seconds — no account, no Discord, no hassle.</p>
+      <ul>
+        <li><a href="/find-lobby">Find a Lobby</a></li>
+        <li><a href="/create-lobby">Create a Lobby</a></li>
+        <li><a href="/about">About QuickLobby</a></li>
+      </ul>
+      <p>Features: Anonymous lobbies, all regions (NA, EU, AP, KR, BR, LATAM, MENA, OCE), all ranks (Iron to Radiant), real-time updates, auto-expiring lobbies, no account needed.</p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

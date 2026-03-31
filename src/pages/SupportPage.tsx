@@ -40,9 +40,9 @@ export default function SupportPage() {
           <span className="w-2 h-2 bg-tertiary" />
           SYS_COMMS // SUPPORT
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
           Support <span className="text-primary-container">Center</span>
-        </h2>
+        </h1>
         <p className="font-body text-sm text-on-surface-variant max-w-xl leading-relaxed">
           Need help or want to report an issue? Check the resources below or send us a message.
         </p>

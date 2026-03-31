@@ -40,9 +40,9 @@ export default function AboutPage() {
           <span className="w-2 h-2 bg-tertiary" />
           SYS_INFO // ABOUT
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
           About <span className="text-primary-container">QUICKLOBBY</span>
-        </h2>
+        </h1>
         <p className="font-body text-base text-on-surface-variant max-w-xl leading-relaxed">
           A fast, anonymous, no-account Valorant lobby finder. Create a lobby in seconds, share your party code,
           and find teammates without Discord servers or Facebook groups.

@@ -8,9 +8,9 @@ export default function TermsPage() {
           <span className="w-2 h-2 bg-tertiary" />
           SYS_LEGAL // TERMS
         </div>
-        <h2 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface mb-4">
           Terms of <span className="text-primary-container">Engagement</span>
-        </h2>
+        </h1>
         <p className="font-body text-sm text-on-surface-variant">
           Last updated: March 30, 2026
         </p>

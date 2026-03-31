@@ -189,9 +189,9 @@ export default function ActiveLobbyPage() {
           <span className="w-2 h-2 bg-tertiary animate-pulse" />
           {isExpired ? 'LOBBY_INACTIVE' : 'LOBBY_ACTIVE // BROADCASTING'}
         </div>
-        <h2 className="text-3xl sm:text-4xl md:text-6xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-black uppercase tracking-tighter leading-none text-on-surface">
           Your <span className="text-primary-container">Lobby</span>
-        </h2>
+        </h1>
       </section>
 
       {error && (

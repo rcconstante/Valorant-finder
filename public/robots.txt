@@ -3,3 +3,22 @@ Allow: /
 Disallow: /lobby/
 
 Sitemap: https://quicklobby.app/sitemap.xml
+
+# LLM crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /

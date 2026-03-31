@@ -1,0 +1,42 @@
+# QuickLobby
+
+> The fastest anonymous Valorant lobby finder. Create or join a lobby in seconds — no account required.
+
+QuickLobby is a free, real-time web app for finding Valorant teammates. No login, no Discord, no personal data collected.
+
+## Features
+
+- **Instant Lobbies**: Create a lobby in seconds with your party code
+- **100% Anonymous**: No account, no sign-up, no personal data
+- **Auto-Expiring**: Lobbies expire after 15 minutes (extendable up to 3 times)
+- **All Regions**: NA, EU, AP, KR, BR, LATAM, MENA, OCE
+- **All Modes**: Competitive, Unrated, Spike Rush, Deathmatch, Swiftplay, Escalation, Replication
+- **All Ranks**: Iron through Radiant, or Any
+- **Real-Time**: Live lobby feed with no page refresh needed
+- **Safe**: Profanity filter, report system, automatic moderation
+
+## Pages
+
+- Home: https://quicklobby.app/
+- Find Lobby: https://quicklobby.app/find-lobby
+- Create Lobby: https://quicklobby.app/create-lobby
+- About: https://quicklobby.app/about
+- Terms: https://quicklobby.app/terms
+- Privacy: https://quicklobby.app/privacy
+- Support: https://quicklobby.app/support
+
+## How It Works
+
+1. Create a lobby with your Valorant party code
+2. Set your region, game mode, rank range, and preferences
+3. Other players find your lobby in the live feed
+4. They copy your party code and join in Valorant
+5. Lobby auto-expires after 15 minutes
+
+## Technical Details
+
+- Built with React, TypeScript, Tailwind CSS
+- Real-time backend powered by Convex
+- No user accounts or authentication required
+- All data auto-deletes after expiry
+- GDPR compliant — minimal data collection
